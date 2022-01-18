@@ -1,3 +1,6 @@
+//AM1: 2954
+//AM2: 2943
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -48,15 +51,13 @@ double weightsO[H2][K];
 double derivWO[H2][K];
 double weightsOldO[H2][K];
 
-
-//void createExamples(float *tr[][2],float *ch[][2]);
+//main routines
 void printPlot();
 double randomNums(void);
 double sq(double x);
 double sigmoid(double x);
-//double abs(double x);
+
 void calcError(double *x,int y);
-//void initialize_data();
 void initializeWeights();
 void feedForward(double *a,int l);
 void backprop(double *x, int r, int *t, int k);
@@ -66,7 +67,7 @@ void file_examples();
 void genikeush();
 
 double examples[3000][2],train[3000][2];
-int C[3000][3],C1[3000][3]; //einai me thn skepsh oti p.x. to (1,0,0) anoikei sthn kathgoria 1 klp
+int C[3000][3],C1[3000][3]; //categories, einai me thn skepsh oti p.x. to (1,0,0) anoikei sthn kathgoria 1 klp
 
 void file_examples(){
 	char str[3000];
@@ -148,21 +149,17 @@ void file_examples(){
 			C1[i][2] = 0;
 		}
 	}
-	//for(i=1000;i<1005;i++){
-	//	printf("(%d,%d,%d)\n",C[i][0],C[i][1],C[i][2]);
-	//}
-	
 }
 
 int main(){
 	
-	//createExamples(training,checking);
 	srand ( time (NULL));
 	file_examples();
 	int groups[4] = {1,300,30,3000};
 	int i,j;
-	// we adjust the H1,H2 manualy since they r defined 
-	//iterate through the network
+	
+	/* we adjust the H1,H2 manualy since they r defined 
+	   iterate through the network, and test all cases first*/
 	/*printf("--------------------------------------------------------------------\n"); 
 	for(i=0;i<2;i++){
 		activation =i;
@@ -175,7 +172,8 @@ int main(){
 		}
 		printf("--------------------------------------------------------------------\n"); 
 	}*/
-	//best network
+	
+	//best network, with the parameters from the above iterations
 	activation = 1;
 	L = groups[0];
 	gradientDescent();
@@ -208,29 +206,23 @@ void initializeWeights(void){
 void feedForward(double *a,int l){
 	int i,j=0;
 	double z,bias = 0.7;
-	//printf("11111\n");
-	//printf("%lf\n",bias);
-	//if(check==1 || check==2){
-	//	printf("%lf\n",*(a+0));
-	//	printf("%lf\n",*(a+1));
-	//	check++;
-	//}
+	
 	for(i=0;i<l;i++){
-		//printf("1212\n");
-		input[i] = *(a+i);//edw isws xreiastei to +bias
-		//input[i] += bias;
-		//printf("input[i] is %lf",input[i]);
+		input[i] = *(a+i);   //edw isws xreiastei to +bias 8a doume
 	}
+	
 	for(i=l;i<d;i++){
-		input[i]=bias; //+bias //kai na bgoun ta bias apo to output
+		input[i]=bias;      //bias //kai na bgoun ta bias apo to output
 	}
+	
 	//calculating the values per neuron for the first hidden layer using σ(u)
 	for(j=0;j<H1;j++){
 		z=0.0;
 		for(i=0;i<d;i++)
 			z+= input[i]*weightsHL1[i][j];//get the dot product 
-		valuesHL1[j] = sigmoid(z + bias);//bias can be whatever
+		valuesHL1[j] = sigmoid(z + bias);     //bias can be whatever
 	}
+	
 	//calculating the values per neuron for the second hidden layer using tahn
 	for(j=0;j<H2;j++){
 		z=0.0;
@@ -248,33 +240,20 @@ void feedForward(double *a,int l){
 }
 //Backwards Pass proccedure
 void backprop(double *x, int r, int *t, int k){
-	//int a = 1;
 	
 	int i,j,activation = 1;
 	double sum =0.0;
-	//printf("10000\n");
-	//printf("%lf\n",*(x+0));
-	//printf("%lf\n",*(x+1));
 	feedForward(x,r);
 	//Output Layer
 	for(i=0;i<k;i++){
-		//printf("5555\n");
-		//if(a==1){
-		//	printf("%lf\n",(double) *(t+i));
-		//}
 		double x =(double)*(t+i);
 		deltaO[i] = (output[i]-x)*(output[i])*(1-output[i]);
 	}
-	/*for(i=i;i<K;i++){
-		deltaO[i] = (output[i]-1.0)*(output[i])*(1-output[i]);
-		//deltaO[i] = (output[i])*(output[i])*(1-output[i]);
-	}*/
-	//a++;
+	
 	//Hidden Layer2
 	for(i=0;i<H2;i++){
 		sum = 0.0;
 		for(j=0;j<K;j++){
-			//printf("5555\n");
 			sum+=deltaO[j]*weightsO[i][j];
 		}
 		if(activation==1)
@@ -324,7 +303,7 @@ void gradientDescent(){
 				backprop(examples[counter], 2, C[counter], 3);
 				for(i=0;i<d;i++){
 					for(j=0;j<H1;j++){ //H1
-						derivWL1[i][j] += eta*(input[i]*deltaHL1[j]);	//patial sum
+						derivWL1[i][j] += eta*(input[i]*deltaHL1[j]);	//partial sum
 					}
 				}
 				for(i=0;i<H1;i++){  //H2
@@ -338,9 +317,8 @@ void gradientDescent(){
 					}
 				}
 				counter++;
-				//printf("%d\n",counter);
 			}
-			//printf("1\n");
+			
 			//perform the updates in output layer
 			for(j=0;j<H2;j++){
 				for(i=0;i<K;i++){
@@ -362,13 +340,8 @@ void gradientDescent(){
 			if(counter==3000){
 				counter = 0;
 				epochs++;
-				//printf("1\n");
 				calcError(*examples ,K);
-				//printf("temp error is %lf\n",temp);
-				//printf("error is %lf\n",error);
-				//printf("error is %lf\n",error/3000.0);
 				if((fabs(error - temp)<=(0.01))&& epochs>499){
-					//printf("%lf\n",fabs(0.001));
 					break;
 				}
 				temp = error;
@@ -392,7 +365,6 @@ void gradientDescent(){
 				}
 			}
 			//current error
-			//double temp = error;
 			for(z=0;z<L;z++){
 				//tha baloume kai allh metablhth metrhth ektos aprooptou...wste na diabazoume prwta thn 1h omada N stoixeiwn...meta thn 2h omada N stoixeiwn klp
 				backprop(examples[counter], 2, C[counter], 3); //(x,t)
@@ -430,17 +402,11 @@ void gradientDescent(){
 					weightsHL1[i][j] = weightsHL1[i][j] - eta*derivWL1[i][j];
 				}
 			}
-			//printf("%d\n",i);
 			if(counter==3000){
 				counter = 0;
 				epochs++;
-				//printf("1\n");
 				calcError(*examples ,K);
-				/*printf("temp error is %lf\n",temp);
-				printf("error is %lf\n",error);
-				printf("error is %lf\n",error/3000.0);*/
 				if((fabs(error - temp)<=(0.01))&& epochs>499){
-					//printf("%lf\n",fabs(0.001));
 					break;
 				}
 				temp = error;
@@ -459,18 +425,10 @@ void calcError(double *t , int u){
 		sum = 0.0;
 		feedForward((t+j),2);
 		for(i = 0;i<u;i++){
-			//if(j==0){
-				//printf("%lf\n",output[i]);
-				//printf("%lf\n",(double)C[j][i]);
-			//}
 			sum+=0.5*sq(((double)C[j][i] - output[i]));
-			//if(j==0){
-			//	printf("%lf\n",sum);
-			//}
 		}
 		error += sum;
 	}
-	//printf("%lf\n",error);
 }
 void genikeush(){
 	int i,j;
@@ -480,8 +438,6 @@ void genikeush(){
 	for(i=0;i<3000;i++){
 		feedForward(train[i],2);
 		for(j=0;j<K;j++){
-			//printf("output[%d] was %lf\n",j,output[j]);
-			//printf("C[%d] was %d\n",j,C1[i][j]);
 			if(output[j]>max){
 				winner = j;
 				max = output[j];
@@ -510,7 +466,7 @@ void printPlot(){
 	if(fp1 == NULL || fp2 == NULL){
 		printf("Error!");
 		exit(1);
-    }
+        }
 	int i,pos=0;
 	double distance;
 	for(i=0;i<3000;i++){
@@ -546,13 +502,3 @@ double sq(double x){
 double sigmoid(double x){
 	return  1/(1+exp(-x));
 }
-/*double abs(double x){
-	if(x<0)
-		return -1*x;
-	else
-		return x;
-}*/
-
-	
-
-
