@@ -5,8 +5,6 @@
 #include <string.h>
 
 #define M 10
-//learning rate
-//#define eta 0.1
 #define N 30
 
 void printPlot(void);
@@ -19,7 +17,6 @@ double euclideanDistance(double x,double y,double z,double w);
 double error = 0.0;
 double minERROR = 100000;
 double bestWeights[M][2],arxeio_weights[M][2];
-//double examples[N][2];
 //where each eaxample belongs to
 int teams[600];
 double weights[M][2];
@@ -44,7 +41,6 @@ void file_examples(){
 	char delim[] = ",";
 	while (fscanf(fp, "%s", str)!=EOF){
 		char *ptr = strtok(str, delim);
-		//printf("%s\n",str);
 		while(ptr != NULL){
 			if(i==0||i==1){
 				printf("%s\n", ptr);
@@ -85,9 +81,6 @@ void file_examples(){
 		}	
 	}
     fclose(fp);
-	//for(i=0;i<2;i++){
-	//	printf("(%lf,%lf)\n",S2[i][0],S2[i][1]);
-	//}
 	i = 0;
 	j = 0;
 	s = 0;
@@ -129,9 +122,6 @@ void file_examples(){
 			i=0;
 		}
 	}
-	//for(i=297;i<299;i++){
-	//	printf("(%lf,%lf)\n",S[i][0],S[i][1]);
-	//}
 }
 
 void LVQ(){
@@ -170,17 +160,7 @@ void LVQ(){
 		if(error<minERROR){
 			minERROR = error;
 			printf("min error inside LVQ is %lf\n",minERROR);
-		/*for(i=0;i<M;i++){
-			if(i==winner){
-				bestWeights[i][0] = weights[i][0];
-				bestWeights[i][1] = weights[i][1];
-			}else{
-				bestWeights[i][0] = weights[i][0];
-				bestWeights[i][1] = weights[i][1];
-			}
-		}*/
 		}
-		//printf("error was %lf\n",error);
 		if(eta<0.000001){
 			//printf("error was %lf\n",error);
 			printf("r is %d\n",r);
@@ -195,9 +175,7 @@ int main(){
 	int multitude[6] = {3,4,5,6,7,10};
 	int i,j;
 	double minError = 100000;
-	//double minTeams[600];
 	int thesh = 0;
-	//double Smin[600][2];
 	for(i=0;i<6;i++){
 		LVQ();
 		if(minERROR<=minError){
@@ -241,7 +219,6 @@ void initWeights(){
 	int i,j,p;
 	for(i=0;i<M;i++){
 		p = rand() % 600;
-		//printf("p is %d\n",p);
 		weights[i][0] = S[p][0];//may need to check for duplicates
 		weights[i][1] = S[p][1];
 	}
