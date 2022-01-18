@@ -280,8 +280,6 @@ void gradientDescent(){
 	//group update
 	while(1){//tha baloume kati gia tis epoxes mallon alliws kana break mesa opws to exoume hdh
 		if(L!=1){
-			//double derivW[L];
-			//printf("1\n");
 			for(i=0;i<d;i++){
 				for(j=0;j<H1;j++){
 					derivWL1[i][j] = 0;
