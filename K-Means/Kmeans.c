@@ -33,7 +33,6 @@ void file_examples(){
 	char delim[] = ",";
 	while (fscanf(fp, "%s", str)!=EOF){
 		char *ptr = strtok(str, delim);
-		//printf("%s\n",str);
 		while(ptr != NULL){
 			if(i==0||i==1){
 				printf("%s\n", ptr);
@@ -74,9 +73,6 @@ void file_examples(){
 		}	
 	}
     fclose(fp);
-	//for(i=0;i<2;i++){
-	//	printf("(%lf,%lf)\n",S2[i][0],S2[i][1]);
-	//}
 	i = 0;
 	j = 0;
 	s = 0;
@@ -143,7 +139,6 @@ int main(){
 	printf("kaluterh epanalhpsh %d\n",thesh);
 	FILE *fp;
 	fp = fopen("K_means.txt", "w+");
-	//fc = fopen("examples2.txt","r+");
 	if(fp == NULL){
 		printf("Error!");
         exit(1);
@@ -204,10 +199,6 @@ void K_means(){
 		for(i=0;i<M;i++){ //orismos kentrwn
 			centers[i][0] = sum[i][0]/plhthos[i];
 			centers[i][1] = sum[i][1]/plhthos[i];
-			//if(i==0){
-				//printf("(%lf,%lf)\n",centers[i][0],centers[i][1]);
-			//}
-			//printf("\n");
 		}
 		for(i=0;i<M;i++){ //orismos kentrwn
 			plhthos[i] = 0;
@@ -229,9 +220,6 @@ void K_means(){
 				for(z=0;z<M;z++){
 					if(teams[i]==z){
 						sfalma += Euclidean_distance(S[i][0],S[i][1],centers[z][0],centers[z][1]);
-						//if(i==0||i==1){
-						//	printf("sfalma was %lf\n",sfalma);
-						//}
 					}	
 				}
 			}
