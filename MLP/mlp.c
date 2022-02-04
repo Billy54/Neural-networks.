@@ -89,11 +89,7 @@ void file_examples(){
 	char delim[] = ",";
 	while (fscanf(fp, "%s", str)!=EOF){
 		char *ptr = strtok(str, delim);
-		//printf("%s\n",str);
 		while(ptr != NULL){
-			if(i==0||i==1){
-				//printf("%s\n", ptr);
-			}
 			sscanf(ptr, "%lf", &examples[i][j]);
 			j ++;
 			ptr = strtok(NULL, delim);
@@ -108,9 +104,6 @@ void file_examples(){
 		char *ptr = strtok(s, delim);
 		//printf("%s\n",str);
 		while(ptr != NULL){
-			if(i==0||i==1){
-				//printf("%s\n", ptr);
-			}
 			sscanf(ptr, "%lf", &train[i][j]);
 			j ++;
 			ptr = strtok(NULL, delim);
