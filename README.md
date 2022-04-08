@@ -2,7 +2,8 @@
 # Contents
 
 ### Perceptron
-* The implementetion consists of 5 hidden layers of nodes: an input layer, two hidden layers and an output layer. Except for the input nodes, each node is a neuron and in our case the first hidden layer will use two different sigmoid activation functions, while the second will have the simple linear function. For the training the impementation will make use of forward feeding, back propagation and gradient descent. Morover to achieve the best results we will test different numbers of Epochs. The goal will be to train our model so it can classify a set of randomly generated points (x, y) into 3 different categories, and evaluate the results using the test data and the metric <b>Root Mean Squered Error</b>. Lastly we will find out how good our model is at learning from the given data using generalization.
+* The implementetion consists of 4 
+layers of nodes: an input layer, two hidden layers and an output layer. Except for the input nodes, each node is a neuron and in our case the first hidden layer will use two different sigmoid activation functions, while the second will have the simple linear function. For the training the impementation will make use of forward feeding, back propagation and gradient descent. Morover to achieve the best results we will test different numbers of Epochs. The goal will be to train our model so it can classify a set of randomly generated points (x, y) into 3 different categories, and evaluate the results using the test data and the metric <b>Root Mean Squered Error</b>. Lastly we will find out how good our model is at learning from the given data using generalization.
 
 <p align="center">
   <img src="https://github.com/billgewrgoulas/Neural-networks./blob/main/Multilayer-perceptron-diagram-with-two-hidden-layers.png" />
